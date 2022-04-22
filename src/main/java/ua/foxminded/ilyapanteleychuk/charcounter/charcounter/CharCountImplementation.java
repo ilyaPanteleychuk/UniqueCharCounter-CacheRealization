@@ -6,10 +6,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-public class CharCounter implements CharCount {
+public class CharCountImplementation implements CharCount {
+
+    private static final Map<String, Map<Character, Integer>> cache = new LinkedHashMap<>();
 
     @Override
-    public Map<Character, Integer> countUniqueChars(String input){
+    public Map<Character, Integer> charCount(String input){
+        Map<Character, Integer> cached = cache.get(input);
+        if(cached != null){
+            return cached;
+        }
+        Map<Character, Integer> calculated = calculateUniqueChars(input);
+        cache.put(input, calculated);
+        return calculated;
+    }
+
+    private Map<Character, Integer> calculateUniqueChars(String input){
         Map<Character, Integer> uniqueChars = new LinkedHashMap<>();
         List<Character> inputCharList = input.toLowerCase().chars().
                     mapToObj(c -> (char) c).collect(Collectors.toList());

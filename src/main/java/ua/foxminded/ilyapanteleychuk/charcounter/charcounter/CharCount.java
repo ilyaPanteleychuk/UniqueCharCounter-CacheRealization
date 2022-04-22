@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface CharCount {
 
-    Map<Character, Integer> countUniqueChars(String input);
+    Map<Character, Integer> charCount(String input);
 }
