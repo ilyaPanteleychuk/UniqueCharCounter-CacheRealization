@@ -23,19 +23,9 @@ public class CharCountImplementation implements CharCount {
 
     private Map<Character, Integer> calculateUniqueChars(String input) {
         Map<Character, Integer> uniqueChars = new LinkedHashMap<>();
-        List<Character> inputCharList = input.toLowerCase().chars().
-            mapToObj(c -> (char) c).collect(Collectors.toList());
-        for(int i = 0; i < inputCharList.size();) {
-            uniqueChars.computeIfAbsent(inputCharList.get(i), character -> {
-                int result = 1;
-                for(int j = i + 1; j < inputCharList.size(); j++) {
-                    if(inputCharList.get(i).equals(inputCharList.get(j))) {
-                        result++;
-                    }
-                }
-                return result;
-            });
-            inputCharList.remove(i);
+        char[] inputCharArray = input.toCharArray();
+        for(char c : inputCharArray){
+            uniqueChars.compute(c, (k, v) -> (v == null) ? 1 : v+1);
         }
         return uniqueChars;
     }
